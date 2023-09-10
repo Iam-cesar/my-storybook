@@ -2,6 +2,7 @@
   "name": "storybook-components",
   "version": "0.1.0",
   "private": true,
+  "type": "commonjs",
   "scripts": {
     "dev": "yarn storybook",
     "build": "next build",
