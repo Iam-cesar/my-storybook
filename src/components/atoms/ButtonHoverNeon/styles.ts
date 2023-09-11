@@ -8,6 +8,7 @@ import {
 
 export const ButtonHoverNeonContainer = styled.span`
   --blue-neon: #00eeff;
+  --animation-time: 400ms;
 
   padding: 0.65rem 1rem;
   background-color: transparent;
@@ -47,7 +48,7 @@ export const ButtonHoverNeonContainer = styled.span`
     opacity: 0;
 
     animation-name: ${borderTopRightAnimationOut};
-    animation-duration: 300ms;
+    animation-duration: var(--animation-time);
     animation-timing-function: ease-in-out;
     animation-fill-mode: backwards;
   }
@@ -61,7 +62,7 @@ export const ButtonHoverNeonContainer = styled.span`
     opacity: 0;
 
     animation-name: ${borderBottomLeftAnimationOut};
-    animation-duration: 300ms;
+    animation-duration: var(--animation-time);
     animation-timing-function: ease-in-out;
     animation-fill-mode: backwards;
   }
@@ -72,7 +73,7 @@ export const ButtonHoverNeonContainer = styled.span`
 
     &::before {
       animation-name: ${borderTopRightAnimationIn};
-      animation-duration: 300ms;
+      animation-duration: var(--animation-time);
       animation-timing-function: ease-in-out;
       animation-fill-mode: forwards;
       border-top: 3px solid var(--blue-neon);
@@ -81,7 +82,7 @@ export const ButtonHoverNeonContainer = styled.span`
 
     &::after {
       animation-name: ${borderBottomLeftAnimationIn};
-      animation-duration: 300ms;
+      animation-duration: var(--animation-time);
       animation-timing-function: ease-in-out;
       animation-fill-mode: forwards;
       border-bottom: 3px solid var(--blue-neon);
