@@ -1,8 +1,12 @@
+import { Meta, StoryObj } from "@storybook/react";
 import NavigationTabs from ".";
 
-export default {
-  title: "components/NavigationTabs",
+const meta = {
+  title: "components/navigation/NavigationTabs",
   component: NavigationTabs,
-};
+} satisfies Meta<typeof NavigationTabs>;
+
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export { NavigationTabs };

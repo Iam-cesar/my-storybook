@@ -1,7 +1,7 @@
 import NeonProgressBar from ".";
 
 export default {
-  title: "components/NeonProgressBar",
+  title: "components/progress/NeonProgressBar",
   component: NeonProgressBar,
 };
 

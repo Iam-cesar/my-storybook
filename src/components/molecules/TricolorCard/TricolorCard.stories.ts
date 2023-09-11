@@ -1,7 +1,7 @@
 import TricolorCard from ".";
 
 export default {
-  title: "components/TricolorCard",
+  title: "components/cards/TricolorCard",
   component: TricolorCard,
 };
 

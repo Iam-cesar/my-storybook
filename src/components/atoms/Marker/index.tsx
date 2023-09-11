@@ -9,7 +9,7 @@ interface IMarkerProps
 }
 
 const Marker = ({ activeTab, ...props }: IMarkerProps) => {
-  return <MarkerContainer activeTab={activeTab} {...props} />;
+  return <MarkerContainer activetab={activeTab} {...props} />;
 };
 
 export default Marker;
