@@ -13,6 +13,8 @@ export const SwiperSliderContainer = styled.div`
     margin-left: auto;
     margin-right: auto;
 
+    padding-left: 3rem;
+
     &:hover {
       .swiper-button-prev,
       .swiper-button-next {
