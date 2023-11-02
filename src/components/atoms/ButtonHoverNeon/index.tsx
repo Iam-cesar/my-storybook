@@ -9,7 +9,7 @@ interface IButtonHoverNeonProps
 
 const ButtonHoverNeon = ({ ...props }: IButtonHoverNeonProps) => {
   return (
-    <ButtonHoverNeonContainer role="button">
+    <ButtonHoverNeonContainer role="button" {...props}>
       Button Neon
     </ButtonHoverNeonContainer>
   );
