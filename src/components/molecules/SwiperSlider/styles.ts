@@ -2,6 +2,9 @@ import styled from "styled-components";
 
 export const SwiperSliderContainer = styled.div`
   max-width: 80vw;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 
   .swiper {
     display: flex;

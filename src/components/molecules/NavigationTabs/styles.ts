@@ -3,6 +3,7 @@ import { styled } from "styled-components";
 export const NavigationTabsContainer = styled.div`
   display: flex;
   position: relative;
+  font-family: "Inter";
 
   :hover {
     cursor: pointer;

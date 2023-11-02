@@ -1,5 +1,4 @@
 import React from "react";
-import useFontInter from "../../../hooks/useFontInter";
 import useNavigationTabs from "../../../hooks/useNavigationTabs";
 import Marker from "../../atoms/Marker";
 import { NavigationButton, NavigationTabsContainer } from "./styles";
@@ -11,11 +10,10 @@ interface INavigationTabsProps
   > {}
 
 const NavigationTabs = ({ ...props }: INavigationTabsProps) => {
-  const { inter } = useFontInter();
   const { activeTab, setClientTab } = useNavigationTabs();
 
   return (
-    <NavigationTabsContainer className={inter} {...props}>
+    <NavigationTabsContainer {...props}>
       <NavigationButton id="nav-btn" onClick={setClientTab}>
         Conteúdos
       </NavigationButton>
