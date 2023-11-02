@@ -4,6 +4,9 @@ export const SwiperSliderContainer = styled.div`
   max-width: 80vw;
 
   .swiper {
+    display: flex;
+    flex-direction: row;
+
     height: 200px;
     width: 100%;
 

@@ -34,7 +34,7 @@ const SwiperSlider = () => {
         className="swiper"
         navigation={true}
         pagination={{ clickable: true }}
-        scrollbar={{ draggable: true }}
+        scrollbar={{ draggable: false }}
         // parallax={true}
         modules={[Pagination, Navigation]}
         speed={600}
@@ -50,7 +50,156 @@ const SwiperSlider = () => {
             />
           </SwiperSlide>
         ))}
-        ...
+        {images.map((image, index) => (
+          <SwiperSlide key={image} className="swiper-slide">
+            <Image
+              src={image}
+              alt=""
+              fill
+              // data-swiper-parallax={`-${index}00`}
+            />
+          </SwiperSlide>
+        ))}
+      </Swiper>
+      <Swiper
+        spaceBetween={0}
+        slidesPerView={slidesPerView}
+        onSlideChange={() => setSwiperLoop(true)}
+        onSwiper={(swiper) => console.log(swiper)}
+        className="swiper"
+        navigation={true}
+        pagination={{ clickable: true }}
+        scrollbar={{ draggable: false }}
+        // parallax={true}
+        modules={[Pagination, Navigation]}
+        speed={600}
+        loop={swiperLoop}
+      >
+        {images.map((image, index) => (
+          <SwiperSlide key={image} className="swiper-slide">
+            <Image
+              src={image}
+              alt=""
+              fill
+              // data-swiper-parallax={`-${index}00`}
+            />
+          </SwiperSlide>
+        ))}
+        {images.map((image, index) => (
+          <SwiperSlide key={image} className="swiper-slide">
+            <Image
+              src={image}
+              alt=""
+              fill
+              // data-swiper-parallax={`-${index}00`}
+            />
+          </SwiperSlide>
+        ))}
+      </Swiper>
+      <Swiper
+        spaceBetween={0}
+        slidesPerView={slidesPerView}
+        onSlideChange={() => setSwiperLoop(true)}
+        onSwiper={(swiper) => console.log(swiper)}
+        className="swiper"
+        navigation={true}
+        pagination={{ clickable: true }}
+        scrollbar={{ draggable: false }}
+        // parallax={true}
+        modules={[Pagination, Navigation]}
+        speed={600}
+        loop={swiperLoop}
+      >
+        {images.map((image, index) => (
+          <SwiperSlide key={image} className="swiper-slide">
+            <Image
+              src={image}
+              alt=""
+              fill
+              // data-swiper-parallax={`-${index}00`}
+            />
+          </SwiperSlide>
+        ))}
+        {images.map((image, index) => (
+          <SwiperSlide key={image} className="swiper-slide">
+            <Image
+              src={image}
+              alt=""
+              fill
+              // data-swiper-parallax={`-${index}00`}
+            />
+          </SwiperSlide>
+        ))}
+      </Swiper>
+      <Swiper
+        spaceBetween={0}
+        slidesPerView={slidesPerView}
+        onSlideChange={() => setSwiperLoop(true)}
+        onSwiper={(swiper) => console.log(swiper)}
+        className="swiper"
+        navigation={true}
+        pagination={{ clickable: true }}
+        scrollbar={{ draggable: false }}
+        // parallax={true}
+        modules={[Pagination, Navigation]}
+        speed={600}
+        loop={swiperLoop}
+      >
+        {images.map((image, index) => (
+          <SwiperSlide key={image} className="swiper-slide">
+            <Image
+              src={image}
+              alt=""
+              fill
+              // data-swiper-parallax={`-${index}00`}
+            />
+          </SwiperSlide>
+        ))}
+        {images.map((image, index) => (
+          <SwiperSlide key={image} className="swiper-slide">
+            <Image
+              src={image}
+              alt=""
+              fill
+              // data-swiper-parallax={`-${index}00`}
+            />
+          </SwiperSlide>
+        ))}
+      </Swiper>
+      <Swiper
+        spaceBetween={0}
+        slidesPerView={slidesPerView}
+        onSlideChange={() => setSwiperLoop(true)}
+        onSwiper={(swiper) => console.log(swiper)}
+        className="swiper"
+        navigation={true}
+        pagination={{ clickable: true }}
+        scrollbar={{ draggable: false }}
+        // parallax={true}
+        modules={[Pagination, Navigation]}
+        speed={600}
+        loop={swiperLoop}
+      >
+        {images.map((image, index) => (
+          <SwiperSlide key={image} className="swiper-slide">
+            <Image
+              src={image}
+              alt=""
+              fill
+              // data-swiper-parallax={`-${index}00`}
+            />
+          </SwiperSlide>
+        ))}
+        {images.map((image, index) => (
+          <SwiperSlide key={image} className="swiper-slide">
+            <Image
+              src={image}
+              alt=""
+              fill
+              // data-swiper-parallax={`-${index}00`}
+            />
+          </SwiperSlide>
+        ))}
       </Swiper>
 
       <SlidesPerViewContainer>
