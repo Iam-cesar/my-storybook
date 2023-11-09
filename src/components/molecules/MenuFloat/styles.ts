@@ -35,6 +35,7 @@ export const MenuFloatContainer = styled.div<IMenuFloatContainerProps>`
 
     transition: all ${animationTime} ease-in-out;
     width: ${({ isMenuOpen }) => (isMenuOpen ? "100%" : "12%")};
+    min-width: 140px;
   }
 
   .menu-float-inner {
