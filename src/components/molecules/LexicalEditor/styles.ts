@@ -391,6 +391,7 @@ export const EditorToolbar = styled.div`
   overflow: auto;
 
   button.toolbar-item {
+    align-items: center;
     border: 0;
     display: flex;
     background: none;

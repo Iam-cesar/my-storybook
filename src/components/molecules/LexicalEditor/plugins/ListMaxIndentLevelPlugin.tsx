@@ -8,10 +8,31 @@ import {
   $isRangeSelection,
   COMMAND_PRIORITY_HIGH,
   INDENT_CONTENT_COMMAND,
+  RangeSelection,
 } from "lexical";
 import { useEffect } from "react";
 
-function getElementNodesInSelection(selection) {
+interface IListMaxIndentLevelPluginProps {
+  maxDepth: number;
+}
+
+export default function ListMaxIndentLevelPlugin({
+  maxDepth,
+}: IListMaxIndentLevelPluginProps) {
+  const [editor] = useLexicalComposerContext();
+
+  useEffect(() => {
+    return editor.registerCommand(
+      INDENT_CONTENT_COMMAND,
+      () => !isIndentPermitted(maxDepth ?? 7),
+      COMMAND_PRIORITY_HIGH
+    );
+  }, [editor, maxDepth]);
+
+  return null;
+}
+
+function getElementNodesInSelection(selection: RangeSelection) {
   const nodesInSelection = selection.getNodes();
 
   if (nodesInSelection.length === 0) {
@@ -26,7 +47,7 @@ function getElementNodesInSelection(selection) {
   );
 }
 
-function isIndentPermitted(maxDepth) {
+function isIndentPermitted(maxDepth: number) {
   const selection = $getSelection();
 
   if (!$isRangeSelection(selection)) {
@@ -53,18 +74,4 @@ function isIndentPermitted(maxDepth) {
   }
 
   return totalDepth <= maxDepth;
-}
-
-export default function ListMaxIndentLevelPlugin({ maxDepth }) {
-  const [editor] = useLexicalComposerContext();
-
-  useEffect(() => {
-    return editor.registerCommand(
-      INDENT_CONTENT_COMMAND,
-      () => !isIndentPermitted(maxDepth ?? 7),
-      COMMAND_PRIORITY_HIGH
-    );
-  }, [editor, maxDepth]);
-
-  return null;
 }

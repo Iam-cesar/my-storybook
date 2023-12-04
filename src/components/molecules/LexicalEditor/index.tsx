@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useState } from "react";
 
 import { CodeHighlightNode, CodeNode } from "@lexical/code";
@@ -18,12 +20,13 @@ import { TabIndentationPlugin } from "@lexical/react/LexicalTabIndentationPlugin
 import { LexicalComposer } from "@lexical/react/LexicalComposer";
 import { ContentEditable } from "@lexical/react/LexicalContentEditable";
 import LexicalErrorBoundary from "@lexical/react/LexicalErrorBoundary";
-import lexicalTheme from "./UI/theme";
 import PlaygroundAutoLinkPlugin from "./plugins/AutoLinkPlugin";
 import CodeHighlightPlugin from "./plugins/CodeHighlightPlugin";
+import ConvertHTMLToLexical from "./plugins/ConvertHTMLToLexical";
 import ToolbarPlugin from "./plugins/ToolbarPlugin";
+import { postEnsinio } from "./post";
 import { EditorContainer } from "./styles";
-import { textDailyStandup } from "./utils/text-daily-standup";
+import lexicalTheme from "./ui/theme";
 
 function Placeholder() {
   return <div className="editor-placeholder">Enter some rich text...</div>;
@@ -32,7 +35,6 @@ function Placeholder() {
 const editorConfig = {
   theme: lexicalTheme,
   namespace: "daily-standup-editor",
-  editorState: textDailyStandup,
   onError(error: unknown) {
     throw error;
   },
@@ -50,15 +52,18 @@ const editorConfig = {
     LinkNode,
   ],
 };
+interface IEditorProps {
+  htmlContent: string;
+}
 
-function Editor(): JSX.Element | null {
+function Editor({ htmlContent = postEnsinio.data }: IEditorProps) {
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
     setIsMounted(true);
   }, []);
 
-  if (!isMounted) return null;
+  if (!isMounted) return <></>;
 
   return (
     <LexicalComposer initialConfig={editorConfig}>
@@ -79,6 +84,7 @@ function Editor(): JSX.Element | null {
           <TabIndentationPlugin />
           <PlaygroundAutoLinkPlugin />
           <MarkdownShortcutPlugin transformers={TRANSFORMERS} />
+          <ConvertHTMLToLexical htmlContent={htmlContent} />
           {/* <TreeViewPlugin /> */}
         </div>
       </EditorContainer>
