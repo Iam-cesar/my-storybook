@@ -80,12 +80,7 @@ const useUpdateToolbar = () => {
       // update links
       const node = getSelectedNode(selection);
       const parent = node.getParent();
-
-      if ($isLinkNode(parent) || $isLinkNode(node)) {
-        setIsLink(true);
-      } else {
-        setIsLink(false);
-      }
+      setIsLink($isLinkNode(parent) || $isLinkNode(node));
     }
   }, [editor]);
 

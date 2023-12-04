@@ -13,6 +13,7 @@ import {
 import { useCallback, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import BlockOptionsDropdownList from "../component/atoms/BlockOptionsDropdownList";
+import ImageToolbarButton from "../component/atoms/ImageToolbarButton";
 import ToolbarSelect from "../component/atoms/ToolbarSelect";
 import useUpdateToolbar from "../hooks/useUpdateToolbar";
 import ArrowClockwise from "../icons/ArrowClockwise";
@@ -254,6 +255,8 @@ export default function ToolbarPlugin() {
           >
             <Justify />
           </button>
+
+          <ImageToolbarButton />
         </>
       )}
     </EditorToolbar>

@@ -20,9 +20,11 @@ import { TabIndentationPlugin } from "@lexical/react/LexicalTabIndentationPlugin
 import { LexicalComposer } from "@lexical/react/LexicalComposer";
 import { ContentEditable } from "@lexical/react/LexicalContentEditable";
 import LexicalErrorBoundary from "@lexical/react/LexicalErrorBoundary";
+import { ImageNode } from "./nodes/ImageNode";
 import PlaygroundAutoLinkPlugin from "./plugins/AutoLinkPlugin";
 import CodeHighlightPlugin from "./plugins/CodeHighlightPlugin";
 import ConvertHTMLToLexical from "./plugins/ConvertHTMLToLexical";
+import ImagesPlugin from "./plugins/ImagePlugin";
 import ToolbarPlugin from "./plugins/ToolbarPlugin";
 import { postEnsinio } from "./post";
 import { EditorContainer } from "./styles";
@@ -50,6 +52,7 @@ const editorConfig = {
     TableRowNode,
     AutoLinkNode,
     LinkNode,
+    ImageNode,
   ],
 };
 interface IEditorProps {
@@ -85,7 +88,7 @@ function Editor({ htmlContent = postEnsinio.data }: IEditorProps) {
           <PlaygroundAutoLinkPlugin />
           <MarkdownShortcutPlugin transformers={TRANSFORMERS} />
           <ConvertHTMLToLexical htmlContent={htmlContent} />
-          {/* <TreeViewPlugin /> */}
+          <ImagesPlugin />
         </div>
       </EditorContainer>
     </LexicalComposer>
