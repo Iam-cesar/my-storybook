@@ -13,7 +13,7 @@ import {
 import { useCallback, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import BlockOptionsDropdownList from "../component/atoms/BlockOptionsDropdownList";
-import ImageToolbarButton from "../component/atoms/ImageToolbarButton";
+import InsertFilesDropdownList from "../component/atoms/InsertFilesDropdownList";
 import ToolbarSelect from "../component/atoms/ToolbarSelect";
 import useUpdateToolbar from "../hooks/useUpdateToolbar";
 import ArrowClockwise from "../icons/ArrowClockwise";
@@ -66,8 +66,11 @@ function Divider() {
 export default function ToolbarPlugin() {
   const [editor] = useLexicalComposerContext();
   const toolbarRef = useRef<HTMLDivElement>(null);
+  const insertFilesBtnRef = useRef<HTMLButtonElement>(null);
 
   const [showBlockOptionsDropDown, setShowBlockOptionsDropDown] =
+    useState(false);
+  const [showInsertOptionsDropDown, setShowInsertOptionsDropDown] =
     useState(false);
 
   const {
@@ -142,6 +145,7 @@ export default function ToolbarPlugin() {
             <span className="text">{blockTypeToBlockName[blockType]}</span>
             <ChevronDown />
           </button>
+
           {showBlockOptionsDropDown &&
             createPortal(
               <BlockOptionsDropdownList
@@ -155,6 +159,7 @@ export default function ToolbarPlugin() {
           <Divider />
         </>
       )}
+
       {blockType === "code" ? (
         <>
           <ToolbarSelect
@@ -256,7 +261,30 @@ export default function ToolbarPlugin() {
             <Justify />
           </button>
 
-          <ImageToolbarButton />
+          <>
+            <button
+              ref={insertFilesBtnRef}
+              className="toolbar-item block-controls"
+              onClick={() =>
+                setShowInsertOptionsDropDown(!showInsertOptionsDropDown)
+              }
+              aria-label="Inserting file options"
+            >
+              <TextParagraph />
+              <span className="text">Inserir</span>
+              <ChevronDown />
+            </button>
+
+            {showInsertOptionsDropDown &&
+              createPortal(
+                <InsertFilesDropdownList
+                  insertFilesBtnRef={insertFilesBtnRef}
+                  setShowInsertOptionsDropDown={setShowInsertOptionsDropDown}
+                />,
+                document.body
+              )}
+            <Divider />
+          </>
         </>
       )}
     </EditorToolbar>

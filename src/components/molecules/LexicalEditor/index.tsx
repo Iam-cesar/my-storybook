@@ -17,6 +17,7 @@ import { MarkdownShortcutPlugin } from "@lexical/react/LexicalMarkdownShortcutPl
 import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
 import { TabIndentationPlugin } from "@lexical/react/LexicalTabIndentationPlugin";
 
+import { ClearEditorPlugin } from "@lexical/react/LexicalClearEditorPlugin";
 import { LexicalComposer } from "@lexical/react/LexicalComposer";
 import { ContentEditable } from "@lexical/react/LexicalContentEditable";
 import LexicalErrorBoundary from "@lexical/react/LexicalErrorBoundary";
@@ -87,6 +88,7 @@ function Editor({ htmlContent = postEnsinio.data }: IEditorProps) {
           <TabIndentationPlugin />
           <PlaygroundAutoLinkPlugin />
           <MarkdownShortcutPlugin transformers={TRANSFORMERS} />
+          <ClearEditorPlugin />
           <ConvertHTMLToLexical htmlContent={htmlContent} />
           <ImagesPlugin />
         </div>

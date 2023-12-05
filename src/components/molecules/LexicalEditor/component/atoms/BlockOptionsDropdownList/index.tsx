@@ -160,31 +160,37 @@ export default function BlockOptionsDropdownList({
         <span className="text">Normal</span>
         {blockType === "paragraph" && <span className="active" />}
       </button>
+
       <button className="item" onClick={formatLargeHeading}>
         <TypeH1 />
         <span className="text">Large Heading</span>
         {blockType === "h1" && <span className="active" />}
       </button>
+
       <button className="item" onClick={formatSmallHeading}>
         <TypeH2 />
         <span className="text">Small Heading</span>
         {blockType === "h2" && <span className="active" />}
       </button>
+
       <button className="item" onClick={formatBulletList}>
         <ListUl />
         <span className="text">Bullet List</span>
         {blockType === "ul" && <span className="active" />}
       </button>
+
       <button className="item" onClick={formatNumberedList}>
         <ListOl />
         <span className="text">Numbered List</span>
         {blockType === "ol" && <span className="active" />}
       </button>
+
       <button className="item" onClick={formatQuote}>
         <ChatSquareQuote />
         <span className="text">Quote</span>
         {blockType === "quote" && <span className="active" />}
       </button>
+
       <button className="item" onClick={formatCode}>
         <TypeCode />
         <span className="text">Code Block</span>

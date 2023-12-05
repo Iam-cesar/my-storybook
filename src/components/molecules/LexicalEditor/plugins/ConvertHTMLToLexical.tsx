@@ -19,6 +19,7 @@ const ConvertHTMLToLexical = ({ htmlContent }: IConvertHTMLToLexicalProps) => {
   const insertNodes = useCallback(() => {
     const nodes = generateNodesFromDOM();
     $getRoot().select();
+    $getRoot().clear();
     $insertNodes(nodes);
   }, [generateNodesFromDOM]);
 
