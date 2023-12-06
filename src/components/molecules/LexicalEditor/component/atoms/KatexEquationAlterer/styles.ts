@@ -1,0 +1,36 @@
+import styled from "styled-components";
+
+export const KatexEquationAltererContainer = styled.div`
+  .KatexEquationAlterer_defaultRow {
+    display: flex;
+    flex-direction: row;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    justify-content: space-between;
+    overflow: hidden;
+  }
+
+  .KatexEquationAlterer_dialogActions {
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
+    margin-top: 20px;
+    margin-bottom: 0;
+    justify-content: right;
+  }
+
+  .KatexEquationAlterer_centerRow {
+    display: flex;
+    flex-direction: "row";
+    margin-top: 10px;
+    margin-bottom: 10px;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .KatexEquationAlterer_textArea {
+    width: 100%;
+    resize: none;
+    padding: 7px;
+  }
+`;

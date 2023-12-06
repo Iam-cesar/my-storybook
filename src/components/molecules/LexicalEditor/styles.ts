@@ -343,6 +343,25 @@ export const EditorDropdown = styled.div`
     min-width: 268px;
   }
 
+  .item-insert-file {
+    margin: 0 8px 0 8px;
+    padding: 8px;
+    color: #050505;
+    cursor: pointer;
+    line-height: 16px;
+    font-size: 15px;
+    display: flex;
+    align-content: center;
+    flex-direction: row;
+    flex-shrink: 0;
+    justify-content: space-between;
+    background-color: #fff;
+    border-radius: 8px;
+    border: 0;
+    min-width: fit-content;
+    max-width: 160px;
+  }
+
   .item .active {
     display: flex;
     width: 20px;
@@ -367,6 +386,10 @@ export const EditorDropdown = styled.div`
     line-height: 20px;
     flex-grow: 1;
     width: 200px;
+  }
+
+  .item-insert-file .text {
+    width: fit-content;
   }
 
   .item svg {

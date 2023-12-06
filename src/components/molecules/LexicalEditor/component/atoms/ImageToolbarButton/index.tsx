@@ -3,11 +3,10 @@ import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext
 import {
   INSERT_IMAGE_COMMAND,
   InsertImagePayload,
-} from "../../../plugins/ImagePlugin";
+} from "../../../plugins/ImagesPlugin";
 
 export function FillURL() {
   const srcfile = prompt("Enter the URL of the image:", "");
-
   return srcfile || "";
 }
 
@@ -18,30 +17,16 @@ export default function ImageToolbarButton(): JSX.Element {
   };
 
   return (
-    <>
-      {/* <button
-        onClick={() =>
-          onClick({
-            altText: "Pink flowers",
-            src: "https://images.pexels.com/photos/5656637/pexels-photo-5656637.jpeg?auto=compress&cs=tinysrgb&w=200",
-          })
-        }
-        className={"toolbar-item spaced "}
-      >
-        <span className="text">Insert Sample</span>
-      </button> */}
-
-      <button
-        onClick={() =>
-          onClick({
-            altText: "URL image",
-            src: FillURL(),
-          })
-        }
-        className={"toolbar-item spaced "}
-      >
-        <span className="text">Insert from URL</span>
-      </button>
-    </>
+    <button
+      onClick={() =>
+        onClick({
+          altText: "URL image",
+          src: FillURL(),
+        })
+      }
+      className={"item item-insert-file"}
+    >
+      <span className="text">Insert image</span>
+    </button>
   );
 }

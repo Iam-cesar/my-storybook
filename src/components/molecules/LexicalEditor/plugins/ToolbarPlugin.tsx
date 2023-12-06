@@ -283,7 +283,6 @@ export default function ToolbarPlugin() {
                 />,
                 document.body
               )}
-            <Divider />
           </>
         </>
       )}

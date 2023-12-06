@@ -1,0 +1,57 @@
+import styled from "styled-components";
+
+export const PageBreakNodeContainer = styled.div`
+  [type="page-break"] {
+    position: relative;
+    display: block;
+    width: calc(100% + 28px) * 2;
+    overflow: unset;
+    margin-left: calc(28px) * -1;
+    margin-top: 28px;
+    margin-bottom: 28px;
+
+    border: none;
+    border-top: 1px dashed #eeeeee;
+    border-bottom: 1px dashed #eeeeee;
+    background-color: #eeeeee;
+  }
+
+  [type="page-break"]::before {
+    content: "";
+
+    position: absolute;
+    top: 50%;
+    left: 40px;
+    transform: translateY(-50%);
+    opacity: 0.5;
+
+    background-size: cover;
+    width: 16px;
+    height: 16px;
+  }
+
+  [type="page-break"]::after {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    display: block;
+    padding: 2px 6px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+
+    content: "PAGE BREAK";
+    font-size: 12px;
+    color: #000;
+    font-weight: 600;
+  }
+
+  .selected[type="page-break"] {
+    border-color: #4766cb;
+  }
+
+  .selected[type="page-break"]::before {
+    opacity: 1;
+  }
+`;

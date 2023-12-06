@@ -2,12 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-import { CodeHighlightNode, CodeNode } from "@lexical/code";
-import { AutoLinkNode, LinkNode } from "@lexical/link";
-import { ListItemNode, ListNode } from "@lexical/list";
 import { TRANSFORMERS } from "@lexical/markdown";
-import { HeadingNode, QuoteNode } from "@lexical/rich-text";
-import { TableCellNode, TableNode, TableRowNode } from "@lexical/table";
 
 import { AutoFocusPlugin } from "@lexical/react/LexicalAutoFocusPlugin";
 import { HistoryPlugin } from "@lexical/react/LexicalHistoryPlugin";
@@ -21,11 +16,13 @@ import { ClearEditorPlugin } from "@lexical/react/LexicalClearEditorPlugin";
 import { LexicalComposer } from "@lexical/react/LexicalComposer";
 import { ContentEditable } from "@lexical/react/LexicalContentEditable";
 import LexicalErrorBoundary from "@lexical/react/LexicalErrorBoundary";
-import { ImageNode } from "./nodes/ImageNode";
+import EditorNodes from "./nodes/EditorNodes";
 import PlaygroundAutoLinkPlugin from "./plugins/AutoLinkPlugin";
 import CodeHighlightPlugin from "./plugins/CodeHighlightPlugin";
 import ConvertHTMLToLexical from "./plugins/ConvertHTMLToLexical";
-import ImagesPlugin from "./plugins/ImagePlugin";
+import DragDropPastePlugin from "./plugins/DragDropPastePlugin";
+import ImagesPlugin from "./plugins/ImagesPlugin";
+import NewMentionsPlugin from "./plugins/MentionsPlugin";
 import ToolbarPlugin from "./plugins/ToolbarPlugin";
 import { postEnsinio } from "./post";
 import { EditorContainer } from "./styles";
@@ -41,20 +38,7 @@ const editorConfig = {
   onError(error: unknown) {
     throw error;
   },
-  nodes: [
-    HeadingNode,
-    ListNode,
-    ListItemNode,
-    QuoteNode,
-    CodeNode,
-    CodeHighlightNode,
-    TableNode,
-    TableCellNode,
-    TableRowNode,
-    AutoLinkNode,
-    LinkNode,
-    ImageNode,
-  ],
+  nodes: [...EditorNodes],
 };
 interface IEditorProps {
   htmlContent: string;
@@ -80,6 +64,7 @@ function Editor({ htmlContent = postEnsinio.data }: IEditorProps) {
             placeholder={<Placeholder />}
             ErrorBoundary={LexicalErrorBoundary}
           />
+          <DragDropPastePlugin />
           <ListPlugin />
           <HistoryPlugin />
           <AutoFocusPlugin />
@@ -91,6 +76,7 @@ function Editor({ htmlContent = postEnsinio.data }: IEditorProps) {
           <ClearEditorPlugin />
           <ConvertHTMLToLexical htmlContent={htmlContent} />
           <ImagesPlugin />
+          <NewMentionsPlugin />
         </div>
       </EditorContainer>
     </LexicalComposer>
