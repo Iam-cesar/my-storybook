@@ -23,7 +23,7 @@ export default function DragDropPaste(): null {
         (async () => {
           const filesResult = await mediaFileReader(
             files,
-            [ACCEPTABLE_IMAGE_TYPES].flatMap((x) => x)
+            [ACCEPTABLE_IMAGE_TYPES].flatMap((res) => res)
           );
 
           const formData = new FormData();
@@ -48,7 +48,7 @@ export default function DragDropPaste(): null {
   return null;
 }
 
-async function sendToAws(body: FormData): Promise<string> {
+export async function sendToAws(body: FormData): Promise<string> {
   const response = await fetch(
     "https://beta.ensinio.cloud/api/v1/uploadimage",
     {
@@ -66,24 +66,3 @@ async function sendToAws(body: FormData): Promise<string> {
 
   return response;
 }
-
-// await api
-//  .post("uploadimage", formData, {
-//    headers: { "Content-Type": "multipart/form-data" },
-//  })
-//  .then((response) => {
-//    if (response.status === 200) return response.data;
-//    return {
-//      error: true,
-//      response: response.status,
-//      "response: ": response.statusText,
-//    };
-//  })
-//  .then((json) => {
-//    const { url } = json.attrs;
-//    const img = `<img src='${url}'/>`;
-//    imagesList.push(img);
-//  })
-//  .catch((err) => {
-//    return err;
-//  });

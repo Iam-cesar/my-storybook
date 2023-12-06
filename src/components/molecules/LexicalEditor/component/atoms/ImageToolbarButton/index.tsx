@@ -16,17 +16,16 @@ export default function ImageToolbarButton(): JSX.Element {
     editor.dispatchCommand(INSERT_IMAGE_COMMAND, payload);
   };
 
+  function handleClick() {
+    onClick({
+      altText: "URL image",
+      src: FillURL(),
+    });
+  }
+
   return (
-    <button
-      onClick={() =>
-        onClick({
-          altText: "URL image",
-          src: FillURL(),
-        })
-      }
-      className={"item item-insert-file"}
-    >
-      <span className="text">Insert image</span>
+    <button onClick={handleClick} className={"item item-insert-file"}>
+      <span className="text">Inserir imagem</span>
     </button>
   );
 }

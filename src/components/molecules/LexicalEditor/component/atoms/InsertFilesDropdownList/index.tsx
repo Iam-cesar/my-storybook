@@ -1,5 +1,6 @@
 "use client";
 
+import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { useEffect, useRef } from "react";
 import { EditorDropdown } from "../../../styles";
 import ImageToolbarButton from "../ImageToolbarButton";
@@ -14,6 +15,7 @@ export default function InsertFilesDropdownList({
   setShowInsertOptionsDropDown,
 }: IInsertFilesDropdownListProps) {
   const dropDownRef = useRef<HTMLDivElement>(null);
+  const [editor] = useLexicalComposerContext();
 
   useEffect(() => {
     const insertButton = insertFilesBtnRef.current;

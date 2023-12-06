@@ -32,6 +32,7 @@ import TypeStrikethrough from "../icons/TypeStrikethrough";
 import TypeUnderline from "../icons/TypeUnderline";
 import { EditorToolbar } from "../styles";
 import FloatingLinkEditor from "../utils/FloatingLinkEditor";
+import { InsertImageDialog } from "./ImagesPlugin";
 
 const LowPriority = 1;
 
@@ -284,6 +285,8 @@ export default function ToolbarPlugin() {
                 document.body
               )}
           </>
+
+          <InsertImageDialog activeEditor={editor} onClose={() => null} />
         </>
       )}
     </EditorToolbar>

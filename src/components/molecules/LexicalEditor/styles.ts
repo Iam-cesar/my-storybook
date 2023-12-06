@@ -11,6 +11,7 @@ export const EditorContainer = styled.div`
   line-height: 20px;
   font-weight: 400;
   text-align: left;
+  position: relative;
 
   h1 {
     font-size: 24px;
@@ -341,6 +342,8 @@ export const EditorDropdown = styled.div`
     border-radius: 8px;
     border: 0;
     min-width: 268px;
+
+    width: 85%;
   }
 
   .item-insert-file {

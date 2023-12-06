@@ -29,6 +29,12 @@ import {
   ImageNode,
   ImagePayload,
 } from "../../nodes/ImageNode";
+import { sendToAws } from "../DragDropPastePlugin";
+import {
+  InsertImageDialogContainer,
+  InsertImageUploadedDialogBodyContainer,
+  InsertImageUriDialogBodyContainer,
+} from "./styles";
 
 export type InsertImagePayload = Readonly<ImagePayload>;
 
@@ -39,9 +45,13 @@ export const INSERT_IMAGE_COMMAND: LexicalCommand<InsertImagePayload> =
   createCommand("INSERT_IMAGE_COMMAND");
 
 export function InsertImageUriDialogBody({
-  onClick,
+  dispatchCommandToInsertImageOnEditor,
+  close,
+  show,
 }: {
-  onClick: (payload: InsertImagePayload) => void;
+  dispatchCommandToInsertImageOnEditor: (payload: InsertImagePayload) => void;
+  show: boolean;
+  close: () => void;
 }) {
   const [src, setSrc] = useState("");
   const [altText, setAltText] = useState("");
@@ -49,7 +59,7 @@ export function InsertImageUriDialogBody({
   const isDisabled = src === "";
 
   return (
-    <>
+    <InsertImageUriDialogBodyContainer show={show}>
       <TextInput
         label="Image URL"
         placeholder="i.e. https://source.unsplash.com/random"
@@ -68,42 +78,56 @@ export function InsertImageUriDialogBody({
         <button
           data-test-id="image-modal-confirm-btn"
           disabled={isDisabled}
-          onClick={() => onClick({ altText, src })}
+          onClick={() => dispatchCommandToInsertImageOnEditor({ altText, src })}
         >
-          Confirm
+          Confirmar
+        </button>
+        <button data-test-id="image-modal-confirm-btn" onClick={close}>
+          Cancelar
         </button>
       </div>
-    </>
+    </InsertImageUriDialogBodyContainer>
   );
 }
 
 export function InsertImageUploadedDialogBody({
-  onClick,
+  dispatchCommandToInsertImageOnEditor,
+  show,
+  close,
 }: {
-  onClick: (payload: InsertImagePayload) => void;
+  dispatchCommandToInsertImageOnEditor: (payload: InsertImagePayload) => void;
+  show: boolean;
+  close: () => void;
 }) {
   const [src, setSrc] = useState("");
   const [altText, setAltText] = useState("");
 
   const isDisabled = src === "";
 
-  const loadImage = (files: FileList | null) => {
+  const loadImage = async (files: FileList | null) => {
     const reader = new FileReader();
-    reader.onload = function () {
+
+    reader.onload = async function () {
       if (typeof reader.result === "string") {
         setSrc(reader.result);
       }
       return "";
     };
+
     if (files !== null) {
-      reader.readAsDataURL(files[0]);
+      const file = files[0];
+      const formData = new FormData();
+      formData.append("image", file);
+      const url = await sendToAws(formData);
+      dispatchCommandToInsertImageOnEditor({ src: url, altText });
+      close();
     }
   };
 
   return (
-    <>
+    <InsertImageUploadedDialogBodyContainer show={show}>
       <FileInput
-        label="Image Upload"
+        label="Upload da imagem"
         onChange={loadImage}
         accept="image/*"
         data-test-id="image-modal-file-upload"
@@ -120,12 +144,15 @@ export function InsertImageUploadedDialogBody({
         <button
           data-test-id="image-modal-file-upload-btn"
           disabled={isDisabled}
-          onClick={() => onClick({ altText, src })}
         >
-          Confirm
+          Confirmar
+        </button>
+
+        <button data-test-id="image-modal-file-upload-btn" onClick={close}>
+          Cancelar
         </button>
       </div>
-    </>
+    </InsertImageUploadedDialogBodyContainer>
   );
 }
 
@@ -150,32 +177,53 @@ export function InsertImageDialog({
     };
   }, [activeEditor]);
 
-  const onClick = (payload: InsertImagePayload) => {
+  const dispatchCommandToInsertImageOnEditor = (
+    payload: InsertImagePayload
+  ) => {
     activeEditor.dispatchCommand(INSERT_IMAGE_COMMAND, payload);
     onClose();
   };
 
+  function closeDialog() {
+    setMode(null);
+  }
+
   return (
-    <>
+    <InsertImageDialogContainer>
       {!mode && (
         <div>
           <button
+            className="item item-insert-file"
             data-test-id="image-modal-option-url"
             onClick={() => setMode("url")}
           >
             URL
           </button>
           <button
+            className="item item-insert-file"
             data-test-id="image-modal-option-file"
             onClick={() => setMode("file")}
           >
-            File
+            Arquivo
           </button>
         </div>
       )}
-      {mode === "url" && <InsertImageUriDialogBody onClick={onClick} />}
-      {mode === "file" && <InsertImageUploadedDialogBody onClick={onClick} />}
-    </>
+
+      <InsertImageUriDialogBody
+        dispatchCommandToInsertImageOnEditor={
+          dispatchCommandToInsertImageOnEditor
+        }
+        show={mode === "url"}
+        close={closeDialog}
+      />
+      <InsertImageUploadedDialogBody
+        dispatchCommandToInsertImageOnEditor={
+          dispatchCommandToInsertImageOnEditor
+        }
+        show={mode === "file"}
+        close={closeDialog}
+      />
+    </InsertImageDialogContainer>
   );
 }
 
@@ -197,6 +245,7 @@ export default function ImagesPlugin({
         (payload) => {
           const imageNode = $createImageNode(payload);
           $insertNodes([imageNode]);
+
           if ($isRootOrShadowRoot(imageNode.getParentOrThrow())) {
             $wrapNodeInElement(imageNode, $createParagraphNode).selectEnd();
           }
@@ -239,13 +288,11 @@ img.src = TRANSPARENT_IMAGE;
 
 function onDragStart(event: DragEvent): boolean {
   const node = getImageNodeInSelection();
-  if (!node) {
-    return false;
-  }
   const dataTransfer = event.dataTransfer;
-  if (!dataTransfer) {
-    return false;
-  }
+  const shouldEarlyReturn = !node || !dataTransfer;
+
+  if (shouldEarlyReturn) return false;
+
   dataTransfer.setData("text/plain", "_");
   dataTransfer.setDragImage(img, 0, 0);
   dataTransfer.setData(
@@ -270,25 +317,22 @@ function onDragStart(event: DragEvent): boolean {
 
 function onDragover(event: DragEvent): boolean {
   const node = getImageNodeInSelection();
-  if (!node) {
-    return false;
-  }
-  if (!canDropImage(event)) {
-    event.preventDefault();
-  }
+
+  if (!node) return false;
+  if (!canDropImage(event)) event.preventDefault();
+
   return true;
 }
 
 function onDrop(event: DragEvent, editor: LexicalEditor): boolean {
   const node = getImageNodeInSelection();
-  if (!node) {
-    return false;
-  }
   const data = getDragImageData(event);
-  if (!data) {
-    return false;
-  }
+  const shouldEarlyReturn = !node || !data;
+
+  if (shouldEarlyReturn) return false;
+
   event.preventDefault();
+
   if (canDropImage(event)) {
     const range = getDragSelection(event);
     node.remove();
@@ -299,14 +343,14 @@ function onDrop(event: DragEvent, editor: LexicalEditor): boolean {
     $setSelection(rangeSelection);
     editor.dispatchCommand(INSERT_IMAGE_COMMAND, data);
   }
+
   return true;
 }
 
 function getImageNodeInSelection(): ImageNode | null {
   const selection = $getSelection();
-  if (!$isNodeSelection(selection)) {
-    return null;
-  }
+  if (!$isNodeSelection(selection)) return null;
+
   const nodes = selection.getNodes();
   const node = nodes[0];
   return $isImageNode(node) ? node : null;
@@ -314,13 +358,10 @@ function getImageNodeInSelection(): ImageNode | null {
 
 function getDragImageData(event: DragEvent): null | InsertImagePayload {
   const dragData = event.dataTransfer?.getData("application/x-lexical-drag");
-  if (!dragData) {
-    return null;
-  }
+  if (!dragData) return null;
+
   const { type, data } = JSON.parse(dragData);
-  if (type !== "image") {
-    return null;
-  }
+  if (type !== "image") return null;
 
   return data;
 }
@@ -352,7 +393,9 @@ function getDragSelection(event: DragEvent): Range | null | undefined {
       : target.nodeType === 9
       ? (target as Document).defaultView
       : (target as Element).ownerDocument.defaultView;
+
   const domSelection = getDOMSelection(targetWindow);
+
   if (document.caretRangeFromPoint) {
     range = document.caretRangeFromPoint(event.clientX, event.clientY);
   } else if (event.rangeParent && domSelection !== null) {
