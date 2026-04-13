@@ -10,7 +10,7 @@ const ContentSecurityPolicyPage = ({
 }: IContentSecurityPolicyPageProps) => {
   return (
     <iframe
-      src="https://beta.ensinio.com"
+      src="https://testeluis.ensinioqa6.click"
       frameBorder="0"
       style={{
         width: "100%",
